@@ -5,24 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
-  <title>OPC 工作台 · 热点</title>
+  <title>OPC 工作台 · 公网只读</title>
   <style>
     :root {--canvas:#f3f3f2;--surface:#fff;--brand:#854a32;--text:#282c2f;--muted:#62666a;--border:#dededb;--nav:#252b2e}
     * {box-sizing:border-box}
     body {margin:0;background:var(--canvas);color:var(--text);font:1rem/1.55 system-ui,"Microsoft YaHei",sans-serif}
-    .shell {width:min(100% - 2rem, 84rem);margin-inline:auto}
-    header {padding-block:1rem;background:var(--nav);color:white}
-    header .shell {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-    .brand {font-size:1.2rem;font-weight:700}
-    nav {display:flex;gap:.5rem}
-    nav a {color:white;background:#854a32;padding:.5rem .75rem;border-radius:.5rem;text-decoration:none}
-    main {padding-block:1.5rem 3rem}
+    body {display:grid;grid-template-columns:13rem minmax(0,1fr)}
+    aside {position:sticky;top:0;height:100vh;overflow:auto;padding:1rem;background:var(--nav);color:#fff}
+    .brand {display:block;width:fit-content;color:inherit;font-size:1.2rem;font-weight:700;text-decoration:none;margin-bottom:1rem}
+    .sidebar-nav {display:grid;gap:.25rem}
+    .sidebar-nav a {display:block;color:#fff;padding:.5rem .75rem;border-radius:.5rem;text-decoration:none}
+    .sidebar-nav a:hover {background:#3d4448}
+    body:not(:has(main :target)) a[href="#overview"],
+    body:has(#overview:target) a[href="#overview"],
+    body:has(#hot:target, #hot :target) .sidebar-nav a[href="#hot"],
+    body:has(#music:target) .sidebar-nav a[href="#music"],
+    body:has(#video:target) .sidebar-nav a[href="#video"],
+    body:has(#workflow:target) .sidebar-nav a[href="#workflow"],
+    body:has(#script:target) .sidebar-nav a[href="#script"],
+    body:has(#story:target) .sidebar-nav a[href="#story"],
+    body:has(#publish:target) .sidebar-nav a[href="#publish"],
+    body:has(#review:target) .sidebar-nav a[href="#review"],
+    body:has(#team:target) .sidebar-nav a[href="#team"],
+    body:has(#tasks:target) .sidebar-nav a[href="#tasks"] {background:var(--brand)}
+    main {width:min(100%,84rem);padding:1.5rem 1.5rem 3rem;min-width:0}
+    .screen {display:none}
+    #overview,.screen:target,#hot:has(:target) {display:block}
+    main:has(.screen:target,#hot :target) #overview:not(:target) {display:none}
+    .region-nav {display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+    .button {display:inline-block;padding:.5rem .75rem;background:var(--brand);color:#fff;border-radius:.5rem;text-decoration:none}
+    .overview-cards {margin-top:1.25rem}
+    .overview-cards a,.local-card {display:block;padding:1rem;border:1px solid var(--border);border-radius:.75rem;background:var(--surface);color:var(--text)}
+    .overview-cards a {text-decoration:none}
+    .overview-cards a:hover {border-color:var(--brand)}
+    .overview-cards strong,.overview-cards small {display:block}
+    .local-card {margin-top:1rem;max-width:40rem}
+    .local-card .button {margin-top:.5rem}
     h1 {font-size:2rem;margin:0}
     h2 {font-size:1.35rem;margin:0}
     h3 {font-size:1.075rem;margin:.375rem 0;overflow-wrap:anywhere}
     p {margin:.375rem 0}
     .meta, .stats {color:var(--muted);font-size:.875rem}
-    section {margin-top:1.5rem;scroll-margin-top:1rem}
+    #hot section {margin-top:1.5rem;scroll-margin-top:1rem}
     .section-head {display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
     .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:.75rem}
     article {min-width:0;padding:1rem;border:1px solid var(--border);border-radius:.75rem;background:var(--surface)}
@@ -31,20 +55,40 @@
     summary {cursor:pointer;font-size:.875rem;width:fit-content}
     details p {overflow-wrap:anywhere;font-size:.875rem}
     a:focus-visible, summary:focus-visible {outline:2px solid var(--brand);outline-offset:3px}
-    nav a:focus-visible {outline-color:white}
+    aside a:focus-visible {outline-color:white}
+    @media (max-width: 700px) {
+      body {grid-template-columns:minmax(0,1fr)}
+      aside {height:auto;z-index:1;padding:.5rem .75rem}
+      .brand {font-size:1rem;margin-bottom:.25rem}
+      .sidebar-nav {grid-template-columns:repeat(4,minmax(0,1fr));gap:.125rem}
+      .sidebar-nav a {padding:.5rem .25rem;text-align:center;font-size:.875rem}
+      main {padding:1rem .75rem 2rem}
+      main section {scroll-margin-top:10.5rem}
+      #hot section {scroll-margin-top:10.5rem}
+    }
   </style>
 </head>
 <body>
-  <header><div class="shell">
-    <span class="brand">OPC 工作台</span>
-    <nav aria-label="热点导航"><a href="#cn">国内</a><a href="#global">国外</a></nav>
-  </div></header>
-  <main class="shell">
-    <h1>热点</h1>
-    <p class="meta">公开只读 · 显示最近一次发布的采集快照 · 北京时间</p>
-    <section id="cn" aria-labelledby="cn-title">
-      <div class="section-head"><h2 id="cn-title">国内 · B站</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
-      <div class="cards"><article>
+  <aside>
+    <a class="brand" href="#overview">OPC 工作台</a>
+    <nav class="sidebar-nav" aria-label="工作台导航"><a href="#overview">总览</a><a href="#hot">热点</a><a href="#music">音乐</a><a href="#video">影片库</a><a href="#workflow">制作流程</a><a href="#script">文案</a><a href="#story">分镜</a><a href="#publish">发布</a><a href="#review">复盘</a><a href="#team">团队</a><a href="#tasks">任务</a></nav>
+  </aside>
+  <main>
+    <section class="screen" id="overview" aria-labelledby="overview-title" tabindex="-1">
+      <h1 id="overview-title">总览</h1>
+      <p class="meta">公网只读 · 热点采集快照 · 北京时间</p>
+      <div class="cards overview-cards">
+        <a href="#cn" aria-label="国内 B站"><strong>国内 · B站</strong><small>30 条 · 11/08 11:55 采集</small></a>
+        <a href="#global" aria-label="国外 YouTube"><strong>国外 · YouTube</strong><small>30 条 · 11/08 11:55 采集</small></a>
+      </div>
+    </section>
+    <section class="screen" id="hot" aria-labelledby="hot-title" tabindex="-1">
+      <h1 id="hot-title">热点</h1>
+      <p class="meta">公开只读 · 最近一次发布的采集快照 · 北京时间</p>
+      <nav class="region-nav" aria-label="热点分区"><a class="button" href="#cn">国内</a><a class="button" href="#global">国外</a></nav>
+      <section id="cn" aria-labelledby="cn-title" tabindex="-1">
+        <div class="section-head"><h2 id="cn-title">国内 · B站</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
+        <div class="cards"><article>
   <p class="meta">橘鸦Juya · 11/08 09:21 发布</p>
   <h3><a href="https://www.bilibili.com/video/BV1dP446BE6B/">OpenAI 智能体 dots 可用验证码代用户登录【AI 早报 2026-11-08】</a></h3>
   <p class="stats">播放 14,788　点赞 397　评论 89</p>
@@ -224,10 +268,10 @@
   <p class="stats">播放 137,237　点赞 14,022　评论 156</p>
   
 </article></div>
-    </section>
-    <section id="global" aria-labelledby="global-title">
-      <div class="section-head"><h2 id="global-title">国外 · YouTube</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
-      <div class="cards"><article>
+      </section>
+      <section id="global" aria-labelledby="global-title" tabindex="-1">
+        <div class="section-head"><h2 id="global-title">国外 · YouTube</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
+        <div class="cards"><article>
   <p class="meta">SavvyNik · 11/08 06:35 发布</p>
   <h3><a href="https://www.youtube.com/watch?v=_BCQ7qbFXGA">Claude Code 用户竟把密钥暴露到了 GitHub</a></h3>
   <p class="stats">播放 16,144　点赞 483　评论 143</p>
@@ -407,7 +451,89 @@
   <p class="stats">播放 241,630　点赞 3,155　评论 1,734</p>
   <details><summary>英文原题</summary><p lang="en">Gina Hinojosa Details &#x27;Changes&#x27; To Texas&#x27;s Relationship To Elon Musk When She Becomes Texas Governor</p></details>
 </article></div>
+      </section>
     </section>
+    <section class="screen" id="music" aria-labelledby="music-title" tabindex="-1">
+  <h1 id="music-title">音乐</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>试听音乐和音效、查看保留曲目、为本期选曲。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「音乐」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="video" aria-labelledby="video-title" tabindex="-1">
+  <h1 id="video-title">影片库</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>浏览模板、历史作品和样片，为本期选择模板。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「影片库」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="workflow" aria-labelledby="workflow-title" tabindex="-1">
+  <h1 id="workflow-title">制作流程</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看本期进度、审核环节与口播方式。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「制作流程」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="script" aria-labelledby="script-title" tabindex="-1">
+  <h1 id="script-title">文案</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>阅读、编辑和确认本期口播稿。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「文案」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="story" aria-labelledby="story-title" tabindex="-1">
+  <h1 id="story-title">分镜</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看、调整和审核本期分镜。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「分镜」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="publish" aria-labelledby="publish-title" tabindex="-1">
+  <h1 id="publish-title">发布</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看本期成片并准备发布资料。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「发布」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="review" aria-labelledby="review-title" tabindex="-1">
+  <h1 id="review-title">复盘</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看或登记已发布视频的数据。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「复盘」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="team" aria-labelledby="team-title" tabindex="-1">
+  <h1 id="team-title">团队</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看各岗位交付和工作记录。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「团队」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
+<section class="screen" id="tasks" aria-labelledby="tasks-title" tabindex="-1">
+  <h1 id="tasks-title">任务</h1>
+  <div class="local-card">
+    <p class="meta">本机使用</p>
+    <p>查看本期任务与执行状态。</p>
+    <p>请在运行 OPC 工作台的电脑上打开，再在左侧选择「任务」。</p>
+    <a class="button" href="http://127.0.0.1:18781/" target="_blank" rel="noopener noreferrer">打开本机工作台</a>
+  </div>
+</section>
   </main>
 </body>
 </html>
