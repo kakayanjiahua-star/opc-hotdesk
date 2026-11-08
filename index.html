@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>OPC 工作台 · 热点</title>
+  <style>
+    :root {--canvas:#f3f3f2;--surface:#fff;--brand:#854a32;--text:#282c2f;--muted:#62666a;--border:#dededb;--nav:#252b2e}
+    * {box-sizing:border-box}
+    body {margin:0;background:var(--canvas);color:var(--text);font:1rem/1.55 system-ui,"Microsoft YaHei",sans-serif}
+    .shell {width:min(100% - 2rem, 84rem);margin-inline:auto}
+    header {padding-block:1rem;background:var(--nav);color:white}
+    header .shell {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .brand {font-size:1.2rem;font-weight:700}
+    nav {display:flex;gap:.5rem}
+    nav a {color:white;background:#854a32;padding:.5rem .75rem;border-radius:.5rem;text-decoration:none}
+    main {padding-block:1.5rem 3rem}
+    h1 {font-size:2rem;margin:0}
+    h2 {font-size:1.35rem;margin:0}
+    h3 {font-size:1.075rem;margin:.375rem 0;overflow-wrap:anywhere}
+    p {margin:.375rem 0}
+    .meta, .stats {color:var(--muted);font-size:.875rem}
+    section {margin-top:1.5rem;scroll-margin-top:1rem}
+    .section-head {display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:.75rem}
+    article {min-width:0;padding:1rem;border:1px solid var(--border);border-radius:.75rem;background:var(--surface)}
+    article a {color:var(--text);text-underline-offset:.18em}
+    article a:hover, summary {color:var(--brand)}
+    summary {cursor:pointer;font-size:.875rem;width:fit-content}
+    details p {overflow-wrap:anywhere;font-size:.875rem}
+    a:focus-visible, summary:focus-visible {outline:2px solid var(--brand);outline-offset:3px}
+    nav a:focus-visible {outline-color:white}
+  </style>
+</head>
+<body>
+  <header><div class="shell">
+    <span class="brand">OPC 工作台</span>
+    <nav aria-label="热点导航"><a href="#cn">国内</a><a href="#global">国外</a></nav>
+  </div></header>
+  <main class="shell">
+    <h1>热点</h1>
+    <p class="meta">公开只读 · 显示最近一次发布的采集快照 · 北京时间</p>
+    <section id="cn" aria-labelledby="cn-title">
+      <div class="section-head"><h2 id="cn-title">国内 · B站</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
+      <div class="cards"><article>
+  <p class="meta">橘鸦Juya · 11/08 09:21 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1dP446BE6B/">OpenAI 智能体 dots 可用验证码代用户登录【AI 早报 2026-11-08】</a></h3>
+  <p class="stats">播放 14,788　点赞 397　评论 89</p>
+  
+</article>
+<article>
+  <p class="meta">深圳卫视科创最前沿 · 11/07 18:56 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Cw4H6vEX3/">姚顺雨揭秘OpenAI 在数学上那批突破的“配方”，腾讯模型也用相同“配方”解出谜题</a></h3>
+  <p class="stats">播放 23,241　点赞 407　评论 49</p>
+  
+</article>
+<article>
+  <p class="meta">渐近自由JJZY · 11/07 17:56 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Qc4E6BENi/">GPT 突发大规模封号？deepseek 服务中断宕机 45 分钟，传架构大更新！Claude 风控加强新进展；GPT-6 Cyber 遥遥领先！</a></h3>
+  <p class="stats">播放 50,547　点赞 661　评论 514</p>
+  
+</article>
+<article>
+  <p class="meta">minimaxh3本地部署_ · 11/07 14:19 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV13n4J6yEYt/">【MiniMaxH3本地部署】11月新版Minimax-H3中文版教程来了！支持50 40 30系显卡，Win+Mac一键下载安装（附最新Comfyui整合包）</a></h3>
+  <p class="stats">播放 20,499　点赞 1,676　评论 109</p>
+  
+</article>
+<article>
+  <p class="meta">渐近自由JJZY · 11/07 14:06 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1hB4j6vEBk/">GPT-6.2 不敢发布，新模型 Kairo？Qwen4 周日发？Claude 量子计算重大突破，防 COT 蒸馏；Antigravity 重置！</a></h3>
+  <p class="stats">播放 22,157　点赞 349　评论 222</p>
+  
+</article>
+<article>
+  <p class="meta">神奇的安度因 · 11/07 12:34 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV15g476CEEL/">【全网首发】21300元，50t/s部署deepseek1017满血版，无需使用linux，支持sodium智能体，本地知识库</a></h3>
+  <p class="stats">播放 14,553　点赞 229　评论 48</p>
+  
+</article>
+<article>
+  <p class="meta">无人知晓的Luke · 11/07 11:59 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Av4764EGg/">Claude KYC 实名认证保姆级教程：中国护照实测及避坑指南</a></h3>
+  <p class="stats">播放 11,552　点赞 252　评论 116</p>
+  
+</article>
+<article>
+  <p class="meta">IT咖啡馆 · 11/07 09:00 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Kw456pEwm/">「Github一周热点137期」快速看懂 DeepSeek superAgent</a></h3>
+  <p class="stats">播放 23,340　点赞 1,100　评论 196</p>
+  
+</article>
+<article>
+  <p class="meta">繁琦啊 · 11/06 23:58 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1gf4B6hEo3/">全网首发！也是第一个，为了更方便在DSH中使用Craft Anything所以我做了个可以开箱即用的dsh-craft-anything插件</a></h3>
+  <p class="stats">播放 14,334　点赞 563　评论 184</p>
+  
+</article>
+<article>
+  <p class="meta">GenJi是真想教会你 · 11/06 20:59 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1DY4v6DEtz/">【小白必看】DeepSeek Harness零基础教程！附大肥鱼全套案例！</a></h3>
+  <p class="stats">播放 749,645　点赞 29,283　评论 1,772</p>
+  
+</article>
+<article>
+  <p class="meta">计科老学姐 · 11/06 19:57 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1C14v6kEKd/">10个合法但有病的github项目，看完只想问图什么</a></h3>
+  <p class="stats">播放 15,570　点赞 927　评论 23</p>
+  
+</article>
+<article>
+  <p class="meta">后宫王雾雨魔理沙 · 11/06 15:35 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1mW4B6sEFx/">美国议员：只要我们停止开发ai，中国模型也会停止进步</a></h3>
+  <p class="stats">播放 17,562　点赞 1,213　评论 131</p>
+  
+</article>
+<article>
+  <p class="meta">渐近自由JJZY · 11/06 14:11 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1qA4i6wEGx/">Claude Pro 跳 KYC，内部模型 Model 4 曝光；GPT-6 Cyber &quot;震撼&quot;发布，要换人重置？DeepSeek Harness 进展良好</a></h3>
+  <p class="stats">播放 34,808　点赞 597　评论 571</p>
+  
+</article>
+<article>
+  <p class="meta">来真的 · 11/06 12:21 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1hV4i6WESv/">爆肝三维动画清晰科普，零基础小白25分钟彻底搞懂AI大模型运作原理</a></h3>
+  <p class="stats">播放 85,780　点赞 8,327　评论 135</p>
+  
+</article>
+<article>
+  <p class="meta">强度强度强度强度 · 11/06 11:49 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1aX4i6oE7W/">当我向DeepSeek许愿做人物模型</a></h3>
+  <p class="stats">播放 272,908　点赞 22,806　评论 829</p>
+  
+</article>
+<article>
+  <p class="meta">牧羊人AILab · 11/06 11:15 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV18g4e6mEg9/">把B站教程链接丢给 DeepSeek Harness 说“我也要”，它真能自己装好吗？实测 5 次</a></h3>
+  <p class="stats">播放 22,013　点赞 371　评论 928</p>
+  
+</article>
+<article>
+  <p class="meta">小白debug · 11/06 09:30 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Ut4h6BERE/">DeepSeek Super-agent是什么，跟普通Agent有什么区别</a></h3>
+  <p class="stats">播放 14,212　点赞 744　评论 183</p>
+  
+</article>
+<article>
+  <p class="meta">橘鸦Juya · 11/06 09:23 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Jh4e6PEBE/">Google 发布 Gemini Omni 1.2 Flash【AI 早报 2026-11-06】</a></h3>
+  <p class="stats">播放 33,103　点赞 871　评论 309</p>
+  
+</article>
+<article>
+  <p class="meta">星主了啦 · 11/06 00:55 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV178486EEs2/">《DeepSeek》大肥鱼官方插件市场要来了！这下再也不用担心插件找不到了！</a></h3>
+  <p class="stats">播放 11,930　点赞 388　评论 189</p>
+  
+</article>
+<article>
+  <p class="meta">白洛奇_qi · 11/06 00:24 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1cN4h6sEwj/">日活154万！日耗92.1万亿token！DeepSeek Harness 首次公布社区数据与插件生态 肥鱼与1017立大功！</a></h3>
+  <p class="stats">播放 11,773　点赞 310　评论 294</p>
+  
+</article>
+<article>
+  <p class="meta">程序员鱼皮 · 11/05 21:35 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1kr4h6fExw/">DeepSeek 新出的 Super Agent 是什么？真有用么？</a></h3>
+  <p class="stats">播放 329,270　点赞 16,378　评论 3,756</p>
+  
+</article>
+<article>
+  <p class="meta">Lau博士的云组会 · 11/05 20:35 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1AX4t6REnY/">大佬联手抓包！所有大模型都在假装不思考！【NIPS&#x27;26】</a></h3>
+  <p class="stats">播放 37,984　点赞 635　评论 148</p>
+  
+</article>
+<article>
+  <p class="meta">穿睡衣的小白白 · 11/05 20:23 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1WQ4t6xEdT/">哈基猫做了个帮大肥鱼存记忆、还能顺手验真假模型的工具【B站AI创造公开赛】</a></h3>
+  <p class="stats">播放 24,797　点赞 1,885　评论 255</p>
+  
+</article>
+<article>
+  <p class="meta">哈基科技 · 11/05 20:00 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1vX4b6CEfT/">Codex额度用完，换成Claude Code，前面聊的全白聊了？</a></h3>
+  <p class="stats">播放 15,064　点赞 2,080　评论 43</p>
+  
+</article>
+<article>
+  <p class="meta">缸缸在干嘛 · 11/05 19:25 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1Dn4b6vEzY/">把PC应用和本地AI装进平板后，这才是移动办公终极答案?</a></h3>
+  <p class="stats">播放 60,350　点赞 1,558　评论 223</p>
+  
+</article>
+<article>
+  <p class="meta">T8star-Aix · 11/05 18:37 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1LX4b6yE2j/">P-H3-Image Vs Qwen Image 2.1全面深度对比，Minimax H3图像模型测评</a></h3>
+  <p class="stats">播放 18,920　点赞 328　评论 89</p>
+  
+</article>
+<article>
+  <p class="meta">GenJi是真想教会你 · 11/05 18:00 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1tTxd6KEeL/">全网最细！40分钟速通Codex！【GenJi深度教程】</a></h3>
+  <p class="stats">播放 443,471　点赞 49,085　评论 820</p>
+  
+</article>
+<article>
+  <p class="meta">神秘的鱼仔 · 11/05 18:00 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1ok446kE2n/">进入开源T0梯队！混元4正式版实测，这次是真发力了</a></h3>
+  <p class="stats">播放 22,432　点赞 1,202　评论 101</p>
+  
+</article>
+<article>
+  <p class="meta">技术胖 · 11/05 17:10 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV1CY446UEn2/">OpenAI 的 Dots 国内用不上？我用免费的 TRAE 当项目经理，自己当老板</a></h3>
+  <p class="stats">播放 131,924　点赞 10,793　评论 104</p>
+  
+</article>
+<article>
+  <p class="meta">无巧不成书吖 · 11/05 14:57 发布</p>
+  <h3><a href="https://www.bilibili.com/video/BV18o446AE44/">【第30期】侦探界最高的神器来了，Github九万颗星！免费开源且功能十分强大！</a></h3>
+  <p class="stats">播放 137,237　点赞 14,022　评论 156</p>
+  
+</article></div>
+    </section>
+    <section id="global" aria-labelledby="global-title">
+      <div class="section-head"><h2 id="global-title">国外 · YouTube</h2><span class="meta">30 条 · 11/08 11:55 采集</span></div>
+      <div class="cards"><article>
+  <p class="meta">SavvyNik · 11/08 06:35 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=_BCQ7qbFXGA">Claude Code 用户竟把密钥暴露到了 GitHub</a></h3>
+  <p class="stats">播放 16,144　点赞 483　评论 143</p>
+  <details><summary>英文原题</summary><p lang="en">Claude Code Users End up Exposing Keys on Github..</p></details>
+</article>
+<article>
+  <p class="meta">Rob The AI Guy · 11/08 02:07 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=x3vdfNOJTbk">ChatGPT 和 Gemini 的新功能太强了，Omni 1.2、GPT-6 Cyber 等更新</a></h3>
+  <p class="stats">播放 4,939　点赞 75　评论 5</p>
+  <details><summary>英文原题</summary><p lang="en">ChatGPT &amp; Gemini’s New Features are INSANE! (Omni 1.2, GPT-6 Cyber &amp; More)</p></details>
+</article>
+<article>
+  <p class="meta">AI Master · 11/08 01:08 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=1iySkKc4tyw">Gemini 现在可以免费用，不再需要 Google AI 订阅</a></h3>
+  <p class="stats">播放 14,844　点赞 279　评论 19</p>
+  <details><summary>英文原题</summary><p lang="en">Gemini Just Became Free — You Don’t Need a Google AI Subscription</p></details>
+</article>
+<article>
+  <p class="meta">Julian Whatley · 11/08 01:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=K8DTAhNwcSQ">我让 Claude 估算 Anthropic 上市后究竟值多少钱</a></h3>
+  <p class="stats">播放 6,351　点赞 198　评论 50</p>
+  <details><summary>英文原题</summary><p lang="en">I Asked Claude What Anthropic’s IPO is REALLY Worth</p></details>
+</article>
+<article>
+  <p class="meta">Two Minute Papers · 11/08 00:24 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=GJ6PMUm5oTA">OpenAI 的 Astra 刚刚打开了 AI 黑箱</a></h3>
+  <p class="stats">播放 134,412　点赞 2,457　评论 185</p>
+  <details><summary>英文原题</summary><p lang="en">OpenAI&#x27;s Astra Just Opened The Black Box Of AI</p></details>
+</article>
+<article>
+  <p class="meta">The Next New Thing · 11/08 00:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=GE5V7yl9kzc">如何用 AI Agent 赚钱，哪些方法真的有效</a></h3>
+  <p class="stats">播放 7,042　点赞 138　评论 14</p>
+  <details><summary>英文原题</summary><p lang="en">How to Make Money With AI Agents (What Actually Works)</p></details>
+</article>
+<article>
+  <p class="meta">Analyst Academy · 11/07 22:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=fkxw0SrwVkA">AI 生成的幻灯片很难看，应该这样修改</a></h3>
+  <p class="stats">播放 3,354　点赞 96　评论 138</p>
+  <details><summary>英文原题</summary><p lang="en">Your AI-Generated Slides Look Terrible -- Here&#x27;s How to Fix Them</p></details>
+</article>
+<article>
+  <p class="meta">Fox News Clips · 11/07 21:31 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=NS8zdp4XaIY">报道称中国情报机构将英伟达 CEO 黄仁勋列为目标</a></h3>
+  <p class="stats">播放 17,615　点赞 134　评论 61</p>
+  <details><summary>英文原题</summary><p lang="en">Chinese spy agency TARGETS Nvidia CEO: Report</p></details>
+</article>
+<article>
+  <p class="meta">CNBC-TV18 · 11/07 21:30 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=Sgo6myoG8zc">报道称美国怀疑英伟达 CEO 黄仁勋与一名中国间谍存在感情关系</a></h3>
+  <p class="stats">播放 3,335　点赞 12　评论 9</p>
+  <details><summary>英文原题</summary><p lang="en">US Believes Nvidia CEO Jensen Huang Had Romantic Ties With Alleged Chinese Spy: Report | N18G</p></details>
+</article>
+<article>
+  <p class="meta">Better Stack · 11/07 20:15 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=ZtOA71C_Nco">Anthropic 替换了 Git，OpenAI 却反其道而行</a></h3>
+  <p class="stats">播放 65,862　点赞 584　评论 86</p>
+  <details><summary>英文原题</summary><p lang="en">Anthropic Replaced Git. OpenAI Did the Opposite.</p></details>
+</article>
+<article>
+  <p class="meta">Tech Meets East · 11/07 15:30 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=VH-G80IHZxw">OpenAI 再次震动行业，作者称 AI 奇点已经到来</a></h3>
+  <p class="stats">播放 8,126　点赞 136　评论 16</p>
+  <details><summary>英文原题</summary><p lang="en">OpenAI Just Shocked The World... AI SINGULARITY Is Here!</p></details>
+</article>
+<article>
+  <p class="meta">Your AI Workflow · 11/07 15:03 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=5-chSX5VXwc">Google Gemini 新增 5 项实用功能，覆盖网站、PDF、Gmail、文档和幻灯片</a></h3>
+  <p class="stats">播放 6,930　点赞 182　评论 8</p>
+  <details><summary>英文原题</summary><p lang="en">Google Gemini Just Got 5 New Features 🤯 (Sites, PDFs, Gmail, Docs &amp; Slides)</p></details>
+</article>
+<article>
+  <p class="meta">Tech Meets East · 11/07 14:30 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=2Upg9LOwwOI">OpenAI 内部似乎出了严重问题</a></h3>
+  <p class="stats">播放 3,020　点赞 57　评论 6</p>
+  <details><summary>英文原题</summary><p lang="en">Something is Going Terribly Wrong at OpenAI…</p></details>
+</article>
+<article>
+  <p class="meta">AI Revolution · 11/07 08:26 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=Zze_PoI_xh0">AI 又迎来大更新，Google Omni 1.2、Claude 提速 2 倍、GPT-6.2</a></h3>
+  <p class="stats">播放 48,766　点赞 593　评论 55</p>
+  <details><summary>英文原题</summary><p lang="en">AI Went Crazy Again: Google Omni 1.2, Claude&#x27;s 2X Acceleration, GPT-6.2</p></details>
+</article>
+<article>
+  <p class="meta">Randy Kirk · 11/07 08:26 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=erzdOM2oZCg">Ron Barron 采访马斯克，引发大量新闻</a></h3>
+  <p class="stats">播放 20,034　点赞 534　评论 54</p>
+  <details><summary>英文原题</summary><p lang="en">Ron Barron&#x27;s Interview with Elon Musk Makes Tons of News</p></details>
+</article>
+<article>
+  <p class="meta">CNBC Television · 11/07 07:07 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=TisVdUTFntg">纽约大学教授 Gary Marcus 认为 OpenAI 可能成为『AI 界的 WeWork』</a></h3>
+  <p class="stats">播放 63,240　点赞 359　评论 193</p>
+  <details><summary>英文原题</summary><p lang="en">OpenAI could become the &#x27;WeWork of AI,&#x27; says NYU Professor Gary Marcus</p></details>
+</article>
+<article>
+  <p class="meta">CNBC Television · 11/07 06:41 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=PoM9HlBl9Y8">《纽约时报》称英伟达 CEO 黄仁勋被列为中国间谍行动目标</a></h3>
+  <p class="stats">播放 23,797　点赞 83　评论 98</p>
+  <details><summary>英文原题</summary><p lang="en">Nvidia CEO Jensen Huang seen as target of Chinese spy plot, according to the New York Times</p></details>
+</article>
+<article>
+  <p class="meta">CNBC Television · 11/07 03:40 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=dGo9cnjemec">OpenAI 财务负责人：选举结果不会改变 AI 数据中心投资计划</a></h3>
+  <p class="stats">播放 13,940　点赞 89　评论 85</p>
+  <details><summary>英文原题</summary><p lang="en">OpenAI will keep investing in AI data centers despite election results, says CFO Sarah Friar</p></details>
+</article>
+<article>
+  <p class="meta">Matt Wolfe · 11/07 02:20 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=IrAHINf0M6E">AI 周报：ChatGPT 和谷歌的新模型，以及 14 项值得关注的更新</a></h3>
+  <p class="stats">播放 95,692　点赞 1,834　评论 128</p>
+  <details><summary>英文原题</summary><p lang="en">AI News: New ChatGPT &amp; Google Models (14 Updates Worth Knowing)</p></details>
+</article>
+<article>
+  <p class="meta">Tech Meets East · 11/07 02:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=8UYftQvOZG0">OpenAI 的融资到底出了什么事？</a></h3>
+  <p class="stats">播放 31,274　点赞 203　评论 49</p>
+  <details><summary>英文原题</summary><p lang="en">What the F*ck Just Happened in OpenAI?</p></details>
+</article>
+<article>
+  <p class="meta">The Tech Report · 11/07 02:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=YB3XE8mWNF0">AI 泡沫：埃德·齐特伦认为 OpenAI 撑不到 2028 年</a></h3>
+  <p class="stats">播放 604,348　点赞 10,458　评论 1,945</p>
+  <details><summary>英文原题</summary><p lang="en">AI Bubble: OpenAI won’t survive to 2028 | Ed Zitron</p></details>
+</article>
+<article>
+  <p class="meta">KTVU FOX 2 San Francisco · 11/07 00:58 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=CQuX-ffwRaI">马斯克称 Cybertruck 将于明年停产</a></h3>
+  <p class="stats">播放 6,509　点赞 45　评论 30</p>
+  <details><summary>英文原题</summary><p lang="en">Elon Musk: Cybertruck production ending next year | KTVU</p></details>
+</article>
+<article>
+  <p class="meta">AI News &amp; Strategy Daily | Nate B Jones · 11/06 23:00 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=S6SEgMooZpE">Git 要终结了？OpenAI CTO 谈编程的未来</a></h3>
+  <p class="stats">播放 17,795　点赞 197　评论 34</p>
+  <details><summary>英文原题</summary><p lang="en">The end of git? OpenAI CTO on the future of coding.</p></details>
+</article>
+<article>
+  <p class="meta">Ai Podcast  · 11/06 22:57 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=dKiKHYAYYW0">Google Gemini 迎来重大升级，2026 年十大关键新功能</a></h3>
+  <p class="stats">播放 3,270　点赞 43　评论 3</p>
+  <details><summary>英文原题</summary><p lang="en">Google Gemini&#x27;s MASSIVE AI Update Is Here! 🤯 10 Game-Changing Features (2026)</p></details>
+</article>
+<article>
+  <p class="meta">Wes Roth · 11/06 22:35 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=2lt4P_xGFL8">Anthropic 刚刚造出了这个……</a></h3>
+  <p class="stats">播放 164,055　点赞 2,628　评论 907</p>
+  <details><summary>英文原题</summary><p lang="en">Anthropic just built it...</p></details>
+</article>
+<article>
+  <p class="meta">Tech With Tim · 11/06 21:56 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=oBvuhcdSsuw">一条视频学会 Codex 的主要功能</a></h3>
+  <p class="stats">播放 29,176　点赞 316　评论 19</p>
+  <details><summary>英文原题</summary><p lang="en">Learn 99% of Codex in One Video</p></details>
+</article>
+<article>
+  <p class="meta">BMF MEDIA · 11/06 19:20 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=tnYkDw6giAA">给 AI Agent 找搭档：用 Codex 接入 EigenFlux 做一次实测</a></h3>
+  <p class="stats">播放 35,717　点赞 2,435　评论 235</p>
+  <details><summary>英文原题</summary><p lang="en">Your AI Agent Has No Friends. I Tried Fixing That With Codex</p></details>
+</article>
+<article>
+  <p class="meta">WorldofAI · 11/06 16:44 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=efnEcbHnRa0">AI 新闻：Claude Sonnet 6 泄露传闻、Anthropic 未发布模型和 GPT-6.2 Astra</a></h3>
+  <p class="stats">播放 87,314　点赞 1,326　评论 141</p>
+  <details><summary>英文原题</summary><p lang="en">HUGE Claude Sonnet 6 LEAK, Anthropic&#x27;s SECRET Fable 6?! GPT-6.2 Astra TODAY, &amp; More! AI NEWS</p></details>
+</article>
+<article>
+  <p class="meta">TheAIGRID · 11/06 16:30 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=R-OeFlyzveI">GPT-6.2 正在发生一些蹊跷的事情</a></h3>
+  <p class="stats">播放 58,113　点赞 754　评论 106</p>
+  <details><summary>英文原题</summary><p lang="en">Something Strange Is Happening With GPT-6.2</p></details>
+</article>
+<article>
+  <p class="meta">Forbes Breaking News · 11/06 12:11 发布</p>
+  <h3><a href="https://www.youtube.com/watch?v=Uz6GRY7XGaQ">吉娜·伊诺霍萨谈上任后得州与马斯克的关系如何变化</a></h3>
+  <p class="stats">播放 241,630　点赞 3,155　评论 1,734</p>
+  <details><summary>英文原题</summary><p lang="en">Gina Hinojosa Details &#x27;Changes&#x27; To Texas&#x27;s Relationship To Elon Musk When She Becomes Texas Governor</p></details>
+</article></div>
+    </section>
+  </main>
+</body>
+</html>
