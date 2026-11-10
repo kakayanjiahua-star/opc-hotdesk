@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>OPC 工作台改版对照</title>
 <style>
-  :root{color-scheme:light;--canvas:#f3f3f2;--surface:#fff;--side:#252b2e;--ink:#282c2f;--muted:#616665;--line:#dededb;--brand:#854a32;--wash:#f8eee8;--mark:#bd7854;--green:#285745;--green-bg:#edf5ef}
+  :root{color-scheme:light;--canvas:#f3f3f2;--surface:#fff;--side:#252b2e;--ink:#282c2f;--muted:#616665;--line:#dededb;--brand:#854a32;--wash:#f8eee8;--mark:#bd7854}
   *{box-sizing:border-box}
   body{margin:0;background:#eaeae7;color:var(--ink);font:14px/1.55 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}
   button,select,textarea{font:inherit;color:inherit}
@@ -78,13 +78,6 @@
   .style small{font-size:11px;color:#6d5549}
   .selected{border-left:3px solid var(--mark);background:var(--wash);padding:4px 6px;border-radius:0 6px 6px 0}
   .selected .pick{margin-top:4px}
-  .diff{margin-top:7px;font-size:12px}
-  .diff b{font-weight:650}
-  .diff .line{margin:5px 0;border-radius:5px;padding:5px 6px;background:#fff;color:#454340}
-  .diff .line{max-height:clamp(145px,24vh,260px);font-size:13px;line-height:1.65}
-  .diff .suggest{background:var(--green-bg);color:var(--green)}
-  .diff .line small{display:block;font-weight:700;font-size:11px}
-  .live{min-height:19px;margin-top:4px;color:var(--green);font-size:12px}
   .rows{display:grid;gap:8px}
   .media{position:relative;overflow:hidden}
   .media .summary,.scene p,.review p{margin-top:5px;font-size:13px;color:var(--muted)}
@@ -164,10 +157,9 @@
       '还有一个细节。换成扫描件、很长的文件或者不同格式，效果可能会变。我会把这几个问题和当时用的材料留在一起。下次再试新工具，仍然从同样的问题开始，这样比较起来比较省事。',
       '如果你每天都要整理资料，可以先拿自己的三份文档跑一遍。看看它能不能给出原文位置，能不能接着上次的工作做，再决定用不用。'
     ],
-    revision: '我先拿三份文档做了两轮测试。第一轮看它能不能找到出处，第二轮看它能不能接着上一次的工作做。',
     scenes: [['01','开场','我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。','标题卡'],['02','实测','我先拿三份文档做了两轮测试。','操作录屏'],['03','结尾','拿自己的三份文档跑一遍，再决定用不用。','总结卡']]
   };
-  let page = '文案', mobile = 'after', applied = false, reviewing = true, proposal = false;
+  let page = '文案', mobile = 'after', proposal = false;
   const pair = document.querySelector('.pair');
   const pin = n => '<span class="pin" aria-label="改动 '+n+'">'+n+'</span>';
   const btn = (text, opts='') => '<button class="btn '+(opts.includes('data-action')?'primary':'')+'" type="button" '+opts+'>'+text+'</button>';
@@ -175,14 +167,14 @@
   function scriptPage(after){
     return original()+'<div class="split"><article class="card draft"><div class="cardhead"><h3>口播稿</h3><span class="tag">待确认</span></div>'+
       (after?'<div class="style change">'+pin(1)+'<b>卡叔风格</b><small>第一人称 · 短句 · 规则 v1（示例）</small></div>':'')+
-      '<div class="draft-copy scroll-copy" tabindex="0" role="region" aria-label="口播稿内容">'+mock.draft.map((p,i)=>i===1&&after?'<div class="selected"><p>'+ (applied?mock.revision:p) +'</p><div class="actions pick">'+pin(2)+btn('改这一段','data-action="pick"')+'</div></div>':'<p>'+p+'</p>').join('')+'</div>'+
+      '<div class="draft-copy scroll-copy" tabindex="0" role="region" aria-label="口播稿内容">'+mock.draft.map((p,i)=>i===1&&after?'<div class="selected"><p>'+p+'</p><div class="actions pick">'+pin(2)+btn('改这一段','data-action="pick"')+'</div></div>':'<p>'+p+'</p>').join('')+'</div>'+
       '<div class="actions">'+btn('保存草稿','disabled')+btn('导出 TXT','disabled')+btn('确认文案','disabled')+'</div></article>'+
       '<article class="card edit"><div class="cardhead"><h3>改稿</h3>'+(after?'<span class="tag">第 2 段</span>':'')+'</div>'+
       (after?'':'<label>修改范围<select aria-label="修改范围" disabled><option>整篇改稿</option></select></label>')+
       '<label>文案模型<select aria-label="文案模型" disabled><option>现有通道</option></select></label>'+
       (after?'':'<label>整篇字数<select aria-label="整篇字数" disabled><option>750–800 字</option></select></label>')+
       '<label>改稿要求<textarea aria-label="改稿要求" readonly>把第 2 段写具体一点。</textarea></label>'+
-      (after?(reviewing?'<div class="diff change" id="diff"><b>'+pin(3)+' 修改对照</b><div class="line scroll-copy" tabindex="0" role="region" aria-label="改前内容"><small>改前</small>'+mock.draft[1]+'</div><div class="line suggest scroll-copy" tabindex="0" role="region" aria-label="建议内容"><small>建议</small>'+mock.revision+'</div><div class="actions">'+btn('采用这一段','data-action="apply" '+(applied?'disabled':''))+btn('撤回','data-action="undo" '+(applied?'':'disabled'))+'</div><p class="live" role="status">'+(applied?'第 2 段已采用 · 预览':'候选稿 · 待采用')+'</p></div>':btn('查看示例候选','data-action="pick"')):'<label class="consent"><input type="checkbox" disabled>允许所选模型生成一次</label>'+btn('生成新稿','disabled'))+
+      (after?'':'<label class="consent"><input type="checkbox" disabled>允许所选模型生成一次</label>'+btn('生成新稿','disabled'))+
       '</article></div>';
   }
   function storyboard(after){
@@ -199,7 +191,7 @@
       (after?'<article class="card review change"><h3>'+pin(6)+' 下次可以沿用</h3><p>开头先说实测结果，再展开过程。依据是这次审稿记录。</p><div class="actions"><span class="tag">'+(proposal?'已留作候选':'待指挥官审核')+'</span>'+btn('留作候选','data-action="proposal" '+(proposal?'disabled':''))+'</div></article>':'')+'</div>';
   }
   const views = {'文案':scriptPage,'分镜':storyboard,'热点':hotspots,'复盘':review};
-  const legends = {'文案':'① 本次风格　② 直接选段　③ 修改对照与撤回','分镜':'④ 同一张卡看口播、预览、素材来源和缺项','热点':'⑤ 移到卡片或键盘聚焦时，操作轻微浮现','复盘':'⑥ 有依据的改法先留作候选'};
+  const legends = {'文案':'① 本次风格　② 直接选段','分镜':'④ 同一张卡看口播、预览、素材来源和缺项','热点':'⑤ 移到卡片或键盘聚焦时，操作轻微浮现','复盘':'⑥ 有依据的改法先留作候选'};
   function render(focus){
     document.querySelector('.tabs').innerHTML=tabs.map(name=>'<button type="button" data-page="'+name+'" aria-pressed="'+(page===name)+'">'+name+'</button>').join('');
     document.querySelectorAll('.switch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.side===mobile)));
@@ -225,13 +217,8 @@
       return;
     }
     if(b.dataset.action==='pick'){
-      reviewing=true;
-      render();
-      document.getElementById('diff')?.scrollIntoView({block:'nearest',behavior:'instant'});
-    }
-    if(b.dataset.action==='apply' || b.dataset.action==='undo'){
-      applied=b.dataset.action==='apply';
-      render('[data-action="'+(applied?'undo':'apply')+'"]');
+      b.closest('.pane').querySelector('.edit textarea').focus();
+      return;
     }
     if(b.dataset.action==='proposal'){
       proposal=true;
