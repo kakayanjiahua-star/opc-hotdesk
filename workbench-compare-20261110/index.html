@@ -12,7 +12,7 @@
   button,select,textarea{font:inherit;color:inherit}
   button{cursor:pointer}
   button:disabled{cursor:default;opacity:.58}
-  button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  button:focus-visible,select:focus-visible,textarea:focus-visible,.scroll-copy:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   h1,h2,h3,p,figure{margin:0}
   [hidden]{display:none!important}
   .outer{max-width:1580px;margin:auto;padding:22px clamp(12px,2.7vw,38px) 28px}
@@ -50,17 +50,27 @@
   .original{margin-bottom:9px}
   .reading{margin:7px 0 5px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:#fcfcfb;font-size:13px;line-height:1.65}
   .reading p+p{margin-top:3px}
+  .scroll-copy{overflow-y:auto;overflow-wrap:anywhere;scrollbar-gutter:stable}
+  .reading{max-height:130px}
+  .draft-copy{max-height:180px}
+  .long-note{max-height:180px;padding:5px 8px}
+  .pane.after .reading,.pane.after .draft-copy{padding:10px 12px;font-size:14px;line-height:1.75}
+  .pane.after .reading{height:clamp(240px,32vh,360px);max-height:none}
+  .pane.after .draft-copy{height:clamp(280px,39vh,440px);max-height:none;border:1px solid var(--line);border-radius:6px}
+  .pane.after .long-note{max-height:clamp(230px,34vh,370px)}
   details{color:var(--muted);font-size:12px;padding:2px 0}
   details summary{cursor:pointer}
   .split{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:8px;align-items:start}
   .draft p{margin:5px 0;font-size:13px;line-height:1.65}
-  .draft .actions{margin-top:9px}
+  .pane.after .draft-copy p{font:inherit;margin:0 0 9px}
+  .draft > .actions,.draft-copy{margin-top:9px}
   .btn{min-height:30px;font-size:12px;padding:4px 7px}
   .edit label{display:grid;gap:3px;margin:6px 0;color:var(--muted);font-size:12px}
   .edit input[type=checkbox]{margin:0;accent-color:var(--brand)}
   .edit label.consent{display:flex;align-items:center}
   .edit select,.edit textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:5px 7px;background:#fff}
   .edit textarea{resize:vertical;min-height:62px}
+  .pane.after .edit textarea{height:clamp(112px,16vh,180px);line-height:1.7}
   .pin{display:inline-grid;place-items:center;width:19px;height:19px;flex:0 0 auto;border-radius:50%;color:#fff;background:var(--brand);font-size:11px;font-weight:700;vertical-align:middle}
   .change{border:1px solid #c48d70;border-radius:6px;background:var(--wash);padding:6px 7px}
   .style{display:flex;gap:6px;align-items:center;margin:7px 0;font-size:12px;color:var(--brand);flex-wrap:wrap}
@@ -70,6 +80,7 @@
   .diff{margin-top:7px;font-size:12px}
   .diff b{font-weight:650}
   .diff .line{margin:5px 0;border-radius:5px;padding:5px 6px;background:#fff;color:#454340}
+  .diff .line{max-height:clamp(145px,24vh,260px);font-size:13px;line-height:1.65}
   .diff .suggest{background:var(--green-bg);color:var(--green)}
   .diff .line small{display:block;font-weight:700;font-size:11px}
   .live{min-height:19px;margin-top:4px;color:var(--green);font-size:12px}
@@ -129,8 +140,30 @@
   const tabs = ['文案', '分镜', '热点', '复盘'];
   const nav = ['总览', '热点', '音乐', '影片库', '文案', '分镜', '团队', '复盘'];
   const mock = {
-    source: ['先看这份更新说明。团队把搜索、记忆和几个常用工具放进了同一套插件。', '我测试了两种用法，一种是跨文档找信息，一种是把例行的整理工作自动化。'],
-    draft: ['我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。', '我先试了搜索功能，结果还可以。然后又试了记忆功能，想看看它能不能记住。', '如果你每天都要整理资料，可以先拿自己的三份文档跑一遍，再决定用不用。'],
+    source: [
+      '先看这份更新说明。团队把搜索、记忆和几个常用工具放进了同一套插件。',
+      '我测试了两种用法，一种是跨文档找信息，一种是把例行的整理工作自动化。两种测试用的是同一组示例文档，方便对照。',
+      '第一份文档是一份会议纪要。里面记录了几次讨论，每次讨论的临时决定都留着，正式决定放在末尾。第二份是按任务整理的清单，第三份是上周写的总结。我想知道，在这三份文件说法不完全一样的时候，它能不能告诉我从哪一份找到了答案。',
+      '第一轮只做查找。我问它最后选了哪种做法，请它给出原文和位置。直接回答一句结论很快，但我更想看它能不能带我回到那句话。只要能回到文件，我就能自己判断那句话是正式决定，还是会上随口提到的一种可能。',
+      '我又换了一种问法。把项目名称拿掉，只说那项任务大概做什么。这样比较接近日常工作的情况。很多时候我们只记得讨论过一件事，记不住当时用的文件名，也想不起标题是什么。',
+      '第二轮才用到记忆。我先在一个会话里让它整理这三份文档，明确告诉它哪些要单独保留。结束后换个会话再问，看它能不能接着整理。我也故意改了一条内容，检查它是否还会沿用旧说法。',
+      '这里有一个细节。模型说它记得，并不能直接说明它找到了原件。我的检查方法很简单。让它把之前的结论和最新的那一段并排摆出来，然后我自己核一遍，两边的意思是不是一样。',
+      '如果只为了记住短期任务，简单的待办可能就够了。如果经常在多份文件之间找出处，能把答案连回原件，会比把所有答案都抄进一个地方更方便。',
+      '最后再看自动化。我把步骤拆成三件事。找出新内容，整理成一份短摘要，最后确认要不要记录。先跑一次，看看每一步能不能停下来检查。等这一轮没有漏项，再考虑下次重复使用。',
+      '这几次测试只能说明这组文档里的表现。换成图片扫描件或较长的历史材料，还需要另外试。我会保留测试问题和文档版本，这样下一次换工具的时候，仍然可以在同一组问题上做对比。',
+      '如果你也要试，可以先拿三份平时真会打开的材料。用你自己的一个问题，看看工具能否给出结论和原文位置。然后再决定，你希望它帮你做查找、整理，还是接手更长的一段工作。'
+    ],
+    draft: [
+      '我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。',
+      '我先试了搜索功能，结果还可以。然后又试了记忆功能，想看看它能不能记住。',
+      '先说我怎么试。桌面上就三份文件，一份会议纪要、一份任务清单，还有一份上周总结。我故意把不同版本的说法都留着，然后问它一个很普通的问题。这个事情最后怎么定的？',
+      '找到答案只是第一步。我还让它把对应的原句找出来。因为开会时说过的话，和最后真正敲定的内容，经常隔着好几段。只看它总结出来的一句话，很容易把中间讨论当成最后决定。',
+      '然后我把项目名字拿掉，换一个更像日常聊天的问法。比如，上周说要整理的那份材料最后放哪了？你不一定记得文件名，但往往记得事情大概是什么。这个时候，能不能把你带回原文，才是我最想知道的。',
+      '接下来我换了一个会话，看看能不能接着上一次整理。我故意改了一条任务，然后让它把新旧两个版本并排摆出来。这样一眼就能看清它是在沿用旧答案，还是看到了我刚补进去的内容。',
+      '至于自动化，我建议先挑每天重复的一步。比如只让它找出新增事项，列一份清单，你自己看一眼。第一遍要是有漏，就改输入或改步骤。等这一步连续几次都能对上，再把后面的工作接进来。',
+      '还有一个细节。换成扫描件、很长的文件或者不同格式，效果可能会变。我会把这几个问题和当时用的材料留在一起。下次再试新工具，仍然从同样的问题开始，这样比较起来比较省事。',
+      '如果你每天都要整理资料，可以先拿自己的三份文档跑一遍。看看它能不能给出原文位置，能不能接着上次的工作做，再决定用不用。'
+    ],
     revision: '我先拿三份文档做了两轮测试。第一轮看它能不能找到出处，第二轮看它能不能接着上一次的工作做。',
     scenes: [['01','开场','我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。','标题卡'],['02','实测','我先拿三份文档做了两轮测试。','操作录屏'],['03','结尾','拿自己的三份文档跑一遍，再决定用不用。','总结卡']]
   };
@@ -138,18 +171,18 @@
   const pair = document.querySelector('.pair');
   const pin = n => '<span class="pin" aria-label="改动 '+n+'">'+n+'</span>';
   const btn = (text, opts='') => '<button class="btn '+(opts.includes('data-action')?'primary':'')+'" type="button" '+opts+'>'+text+'</button>';
-  const original = () => '<article class="card original"><div class="cardhead"><h3>原文逐字稿 <span class="tag">中文</span></h3><div class="actions">'+btn('取逐字稿','disabled')+btn('导出 TXT','disabled')+'</div></div><div class="reading">'+mock.source.map(p=>'<p>'+p+'</p>').join('')+'</div><details><summary>中文文字稿</summary><p>对三份文档进行搜索与记忆测试。</p></details><details><summary>依据与核对</summary><p>本页使用独立示例。</p></details></article>';
+  const original = () => '<article class="card original"><div class="cardhead"><h3>原文逐字稿 <span class="tag">中文</span></h3><div class="actions">'+btn('取逐字稿','disabled')+btn('导出 TXT','disabled')+'</div></div><div class="reading scroll-copy" tabindex="0" role="region" aria-label="原文逐字稿内容">'+mock.source.map(p=>'<p>'+p+'</p>').join('')+'</div><details><summary>中文文字稿</summary><div class="long-note scroll-copy" tabindex="0" role="region" aria-label="中文文字稿内容">'+mock.source.slice(2,8).map(p=>'<p>'+p+'</p>').join('')+'</div></details><details><summary>依据与核对</summary><p>本页使用独立示例。</p></details></article>';
   function scriptPage(after){
     return original()+'<div class="split"><article class="card draft"><div class="cardhead"><h3>口播稿</h3><span class="tag">待确认</span></div>'+
       (after?'<div class="style change">'+pin(1)+'<b>卡叔风格</b><small>第一人称 · 短句 · 规则 v1（示例）</small></div>':'')+
-      mock.draft.map((p,i)=>i===1&&after?'<div class="selected"><p>'+ (applied?mock.revision:p) +'</p><div class="actions pick">'+pin(2)+btn('改这一段','data-action="pick"')+'</div></div>':'<p>'+p+'</p>').join('')+
+      '<div class="draft-copy scroll-copy" tabindex="0" role="region" aria-label="口播稿内容">'+mock.draft.map((p,i)=>i===1&&after?'<div class="selected"><p>'+ (applied?mock.revision:p) +'</p><div class="actions pick">'+pin(2)+btn('改这一段','data-action="pick"')+'</div></div>':'<p>'+p+'</p>').join('')+'</div>'+
       '<div class="actions">'+btn('保存草稿','disabled')+btn('导出 TXT','disabled')+btn('确认文案','disabled')+'</div></article>'+
       '<article class="card edit"><div class="cardhead"><h3>改稿</h3>'+(after?'<span class="tag">第 2 段</span>':'')+'</div>'+
       (after?'':'<label>修改范围<select aria-label="修改范围" disabled><option>整篇改稿</option></select></label>')+
       '<label>文案模型<select aria-label="文案模型" disabled><option>现有通道</option></select></label>'+
       (after?'':'<label>整篇字数<select aria-label="整篇字数" disabled><option>750–800 字</option></select></label>')+
       '<label>改稿要求<textarea aria-label="改稿要求" readonly>把第 2 段写具体一点。</textarea></label>'+
-      (after?(reviewing?'<div class="diff change" id="diff"><b>'+pin(3)+' 修改对照</b><div class="line"><small>改前</small>'+mock.draft[1]+'</div><div class="line suggest"><small>建议</small>'+mock.revision+'</div><div class="actions">'+btn('采用这一段','data-action="apply" '+(applied?'disabled':''))+btn('撤回','data-action="undo" '+(applied?'':'disabled'))+'</div><p class="live" role="status">'+(applied?'第 2 段已采用 · 预览':'候选稿 · 待采用')+'</p></div>':btn('查看示例候选','data-action="pick"')):'<label class="consent"><input type="checkbox" disabled>允许所选模型生成一次</label>'+btn('生成新稿','disabled'))+
+      (after?(reviewing?'<div class="diff change" id="diff"><b>'+pin(3)+' 修改对照</b><div class="line scroll-copy" tabindex="0" role="region" aria-label="改前内容"><small>改前</small>'+mock.draft[1]+'</div><div class="line suggest scroll-copy" tabindex="0" role="region" aria-label="建议内容"><small>建议</small>'+mock.revision+'</div><div class="actions">'+btn('采用这一段','data-action="apply" '+(applied?'disabled':''))+btn('撤回','data-action="undo" '+(applied?'':'disabled'))+'</div><p class="live" role="status">'+(applied?'第 2 段已采用 · 预览':'候选稿 · 待采用')+'</p></div>':btn('查看示例候选','data-action="pick"')):'<label class="consent"><input type="checkbox" disabled>允许所选模型生成一次</label>'+btn('生成新稿','disabled'))+
       '</article></div>';
   }
   function storyboard(after){
