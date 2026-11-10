@@ -61,6 +61,7 @@
   details{color:var(--muted);font-size:12px;padding:2px 0}
   details summary{cursor:pointer}
   .split{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:8px;align-items:start}
+  .pane.after .split{grid-template-columns:minmax(0,1fr);gap:10px}
   .draft p{margin:5px 0;font-size:13px;line-height:1.65}
   .pane.after .draft-copy p{font:inherit;margin:0 0 9px}
   .draft > .actions,.draft-copy{margin-top:9px}
@@ -115,7 +116,6 @@
     .rail button{width:auto;padding:5px 6px;font-size:12px}
     .rail li:nth-child(3),.rail li:nth-child(4),.rail li:nth-child(7){display:none}
     .split{grid-template-columns:minmax(0,1fr)}
-    .pane.after .edit{order:-1}
     .media.reveal .actions{opacity:1;transform:none}
   }
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
