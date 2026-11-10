@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>OPC 工作台改版对照</title>
+<style>
+  :root{color-scheme:light;--canvas:#f3f3f2;--surface:#fff;--side:#252b2e;--ink:#282c2f;--muted:#616665;--line:#dededb;--brand:#854a32;--wash:#f8eee8;--mark:#bd7854;--green:#285745;--green-bg:#edf5ef}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eaeae7;color:var(--ink);font:14px/1.55 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}
+  button,select,textarea{font:inherit;color:inherit}
+  button{cursor:pointer}
+  button:disabled{cursor:default;opacity:.58}
+  button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  h1,h2,h3,p,figure{margin:0}
+  [hidden]{display:none!important}
+  .outer{max-width:1580px;margin:auto;padding:22px clamp(12px,2.7vw,38px) 28px}
+  .intro{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:13px}
+  .intro h1{font-size:clamp(22px,3vw,31px);font-weight:720;line-height:1.2;letter-spacing:-.025em}
+  .intro p{margin-top:5px;color:var(--muted)}
+  .intro .meta{white-space:nowrap;font-size:12px}
+  .controls{position:sticky;z-index:3;top:0;background:#eaeae7;display:grid;gap:7px;padding:4px 0 10px}
+  .tabs,.switch{display:flex;flex-wrap:wrap;gap:5px}
+  .tabs button,.switch button,.btn{border:1px solid var(--line);border-radius:7px;background:#fff;min-height:33px;padding:5px 10px}
+  .tabs button[aria-pressed=true],.btn.primary{background:var(--brand);border-color:var(--brand);color:white}
+  .switch{display:none}
+  .switch button[aria-pressed=true]{color:var(--brand);background:var(--wash);border-color:var(--mark);font-weight:700}
+  .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:14px}
+  .pane{min-width:0;background:var(--canvas);border:1px solid #d5d5d0;border-radius:12px;overflow:hidden}
+  .pane-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);background:#fafaf8}
+  .pane-head h2{font-size:15px}
+  .pane-head span{color:var(--muted);font-size:12px}
+  .pane.after .pane-head{background:#f8efe9;color:var(--brand)}
+  .mock{display:grid;grid-template-columns:99px minmax(0,1fr);min-height:570px}
+  .rail{background:var(--side);color:#cbd1d3;padding:12px 6px;min-width:0}
+  .wordmark{display:block;color:white;font-size:15px;font-weight:700;padding:2px 4px 10px;white-space:nowrap}
+  .wordmark small{color:#bfc5c6;font-size:10px;font-weight:400}
+  .rail ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+  .rail button{display:block;text-align:left;width:100%;background:transparent;color:inherit;border:0;border-radius:6px;padding:6px 7px;white-space:nowrap}
+  .rail button[aria-current=page]{background:var(--brand);color:white}
+  .desk{min-width:0;padding:13px 12px 16px}
+  .bar,.cardhead,.actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .bar,.cardhead{justify-content:space-between}
+  .bar{margin-bottom:10px}
+  .bar h3{font-size:20px}
+  .cardhead h3{font-size:15px}
+  .tag{display:inline-flex;align-items:center;background:#eeefed;border-radius:5px;padding:2px 6px;color:#535955;font-size:11px;vertical-align:middle}
+  .card{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+  .original{margin-bottom:9px}
+  .reading{margin:7px 0 5px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:#fcfcfb;font-size:13px;line-height:1.65}
+  .reading p+p{margin-top:3px}
+  details{color:var(--muted);font-size:12px;padding:2px 0}
+  details summary{cursor:pointer}
+  .split{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:8px;align-items:start}
+  .draft p{margin:5px 0;font-size:13px;line-height:1.65}
+  .draft .actions{margin-top:9px}
+  .btn{min-height:30px;font-size:12px;padding:4px 7px}
+  .edit label{display:grid;gap:3px;margin:6px 0;color:var(--muted);font-size:12px}
+  .edit input[type=checkbox]{margin:0;accent-color:var(--brand)}
+  .edit label.consent{display:flex;align-items:center}
+  .edit select,.edit textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:5px 7px;background:#fff}
+  .edit textarea{resize:vertical;min-height:62px}
+  .pin{display:inline-grid;place-items:center;width:19px;height:19px;flex:0 0 auto;border-radius:50%;color:#fff;background:var(--brand);font-size:11px;font-weight:700;vertical-align:middle}
+  .change{border:1px solid #c48d70;border-radius:6px;background:var(--wash);padding:6px 7px}
+  .style{display:flex;gap:6px;align-items:center;margin:7px 0;font-size:12px;color:var(--brand);flex-wrap:wrap}
+  .style small{font-size:11px;color:#6d5549}
+  .selected{border-left:3px solid var(--mark);background:var(--wash);padding:4px 6px;border-radius:0 6px 6px 0}
+  .selected .pick{margin-top:4px}
+  .diff{margin-top:7px;font-size:12px}
+  .diff b{font-weight:650}
+  .diff .line{margin:5px 0;border-radius:5px;padding:5px 6px;background:#fff;color:#454340}
+  .diff .suggest{background:var(--green-bg);color:var(--green)}
+  .diff .line small{display:block;font-weight:700;font-size:11px}
+  .live{min-height:19px;margin-top:4px;color:var(--green);font-size:12px}
+  .rows{display:grid;gap:8px}
+  .media{position:relative;overflow:hidden}
+  .media .summary,.scene p,.review p{margin-top:5px;font-size:13px;color:var(--muted)}
+  .media .actions{margin-top:8px}
+  .media.reveal .actions{opacity:.62;transform:translateY(3px);transition:opacity .18s ease,transform .18s ease}
+  .media.reveal:is(:hover,:focus-within,.open) .actions{opacity:1;transform:none}
+  .media .stats{display:flex;gap:10px;margin-top:6px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+  .scene{display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px}
+  .thumb{min-height:58px;display:grid;place-items:center;background:#eeedea;border:1px solid #dddcd7;border-radius:6px;color:#70655d;font-size:11px}
+  .scene h3,.review h3{font-size:14px}
+  .scene .actions,.review .actions{margin-top:6px}
+  .empty{color:var(--muted);padding:8px 0;font-size:12px}
+  .legend{padding:8px 12px 10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);background:#fafaf8}
+  @media(max-width:1140px){.mock{grid-template-columns:78px minmax(0,1fr)}.wordmark small{display:none}.desk{padding:10px}}
+  @media(max-width:950px){
+    .outer{padding:15px 12px 22px}
+    .intro{align-items:start;margin-bottom:8px}
+    .intro .meta{display:none}
+    .pair{display:block}
+    .switch{display:flex}
+    .switch button{flex:1;min-height:37px}
+    .pane:not(.mobile-active){display:none}
+  }
+  @media(max-width:550px){
+    .mock{display:block;min-height:0}
+    .rail{display:flex;align-items:center;padding:4px 5px}
+    .wordmark{padding:2px 7px 2px 4px}
+    .rail ul{display:flex;min-width:0;overflow-x:auto;scrollbar-width:none;gap:1px}
+    .rail button{width:auto;padding:5px 6px;font-size:12px}
+    .rail li:nth-child(3),.rail li:nth-child(4),.rail li:nth-child(7){display:none}
+    .split{grid-template-columns:minmax(0,1fr)}
+    .pane.after .edit{order:-1}
+    .media.reveal .actions{opacity:1;transform:none}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="outer">
+  <header class="intro">
+    <div><h1>OPC 工作台改版对照</h1><p>左边现有版，右边改版。铜色编号标出变化。</p></div>
+    <p class="meta">静态预览 · 两边使用相同示例</p>
+  </header>
+  <div class="controls">
+    <nav class="tabs" aria-label="选择对照板块"></nav>
+    <div class="switch" aria-label="选择对照版本">
+      <button type="button" data-side="before" aria-pressed="false">左边 · 现有版</button>
+      <button type="button" data-side="after" aria-pressed="true">右边 · 改版</button>
+    </div>
+  </div>
+  <div class="pair"></div>
+</main>
+<script>
+  const tabs = ['文案', '分镜', '热点', '复盘'];
+  const nav = ['总览', '热点', '音乐', '影片库', '文案', '分镜', '团队', '复盘'];
+  const mock = {
+    source: ['先看这份更新说明。团队把搜索、记忆和几个常用工具放进了同一套插件。', '我测试了两种用法，一种是跨文档找信息，一种是把例行的整理工作自动化。'],
+    draft: ['我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。', '我先试了搜索功能，结果还可以。然后又试了记忆功能，想看看它能不能记住。', '如果你每天都要整理资料，可以先拿自己的三份文档跑一遍，再决定用不用。'],
+    revision: '我先拿三份文档做了两轮测试。第一轮看它能不能找到出处，第二轮看它能不能接着上一次的工作做。',
+    scenes: [['01','开场','我是卡叔。今天我拿一个插件包，试试它能不能帮我们少切几个页面。','标题卡'],['02','实测','我先拿三份文档做了两轮测试。','操作录屏'],['03','结尾','拿自己的三份文档跑一遍，再决定用不用。','总结卡']]
+  };
+  let page = '文案', mobile = 'after', applied = false, reviewing = true, proposal = false;
+  const pair = document.querySelector('.pair');
+  const pin = n => '<span class="pin" aria-label="改动 '+n+'">'+n+'</span>';
+  const btn = (text, opts='') => '<button class="btn '+(opts.includes('data-action')?'primary':'')+'" type="button" '+opts+'>'+text+'</button>';
+  const original = () => '<article class="card original"><div class="cardhead"><h3>原文逐字稿 <span class="tag">中文</span></h3><div class="actions">'+btn('取逐字稿','disabled')+btn('导出 TXT','disabled')+'</div></div><div class="reading">'+mock.source.map(p=>'<p>'+p+'</p>').join('')+'</div><details><summary>中文文字稿</summary><p>对三份文档进行搜索与记忆测试。</p></details><details><summary>依据与核对</summary><p>本页使用独立示例。</p></details></article>';
+  function scriptPage(after){
+    return original()+'<div class="split"><article class="card draft"><div class="cardhead"><h3>口播稿</h3><span class="tag">待确认</span></div>'+
+      (after?'<div class="style change">'+pin(1)+'<b>卡叔风格</b><small>第一人称 · 短句 · 规则 v1（示例）</small></div>':'')+
+      mock.draft.map((p,i)=>i===1&&after?'<div class="selected"><p>'+ (applied?mock.revision:p) +'</p><div class="actions pick">'+pin(2)+btn('改这一段','data-action="pick"')+'</div></div>':'<p>'+p+'</p>').join('')+
+      '<div class="actions">'+btn('保存草稿','disabled')+btn('导出 TXT','disabled')+btn('确认文案','disabled')+'</div></article>'+
+      '<article class="card edit"><div class="cardhead"><h3>改稿</h3>'+(after?'<span class="tag">第 2 段</span>':'')+'</div>'+
+      (after?'':'<label>修改范围<select aria-label="修改范围" disabled><option>整篇改稿</option></select></label>')+
+      '<label>文案模型<select aria-label="文案模型" disabled><option>现有通道</option></select></label>'+
+      (after?'':'<label>整篇字数<select aria-label="整篇字数" disabled><option>750–800 字</option></select></label>')+
+      '<label>改稿要求<textarea aria-label="改稿要求" readonly>把第 2 段写具体一点。</textarea></label>'+
+      (after?(reviewing?'<div class="diff change" id="diff"><b>'+pin(3)+' 修改对照</b><div class="line"><small>改前</small>'+mock.draft[1]+'</div><div class="line suggest"><small>建议</small>'+mock.revision+'</div><div class="actions">'+btn('采用这一段','data-action="apply" '+(applied?'disabled':''))+btn('撤回','data-action="undo" '+(applied?'':'disabled'))+'</div><p class="live" role="status">'+(applied?'第 2 段已采用 · 预览':'候选稿 · 待采用')+'</p></div>':btn('查看示例候选','data-action="pick"')):'<label class="consent"><input type="checkbox" disabled>允许所选模型生成一次</label>'+btn('生成新稿','disabled'))+
+      '</article></div>';
+  }
+  function storyboard(after){
+    return '<div class="rows">'+mock.scenes.map(([n,title,voice,thumb],i)=>
+      '<article class="card scene '+(after&&i===1?'change':'')+'"><figure class="thumb">'+thumb+'</figure><div><h3>'+ (after&&i===1?pin(4)+' ':'')+n+'　'+title+'</h3><p>'+voice+'</p>'+
+      (after?'<div class="actions"><span class="tag">'+(i===1?'缺操作录屏':'素材已就绪')+'</span><span class="tag">'+(i===1?'来源待补':'来源：自制')+'</span>'+(i===1?btn('补这一镜','disabled'):'')+'</div>':'')+'</div></article>').join('')+'</div>';
+  }
+  function hotspots(after){
+    return '<div class="rows">'+['AI 办公插件实测','三个开源工具怎么选'].map((title,i)=>
+      '<article class="card media '+(after?'reveal':'')+'"><div class="cardhead"><h3>'+(after&&i===0?pin(5)+' ':'')+title+'</h3><span class="tag">B站</span></div><p class="summary">实用工具 · 可复现教程</p><div class="stats"><span>播放 12.0万</span><span>点赞 3,480</span><span>评论 186</span></div><div class="actions">'+btn('制作','disabled')+btn('原视频','disabled')+btn('取逐字稿','disabled')+'</div></article>').join('')+'</div>';
+  }
+  function review(after){
+    return '<div class="rows"><article class="card review"><h3>发布数据</h3><p>AI 办公插件实测 · 发布后 72 小时（示例）</p><div class="actions"><span class="tag">播放 12,800</span><span class="tag">点赞 580</span><span class="tag">收藏 240</span></div></article>'+
+      (after?'<article class="card review change"><h3>'+pin(6)+' 下次可以沿用</h3><p>开头先说实测结果，再展开过程。依据是这次审稿记录。</p><div class="actions"><span class="tag">'+(proposal?'已留作候选':'待指挥官审核')+'</span>'+btn('留作候选','data-action="proposal" '+(proposal?'disabled':''))+'</div></article>':'')+'</div>';
+  }
+  const views = {'文案':scriptPage,'分镜':storyboard,'热点':hotspots,'复盘':review};
+  const legends = {'文案':'① 本次风格　② 直接选段　③ 修改对照与撤回','分镜':'④ 同一张卡看口播、预览、素材来源和缺项','热点':'⑤ 移到卡片或键盘聚焦时，操作轻微浮现','复盘':'⑥ 有依据的改法先留作候选'};
+  function render(focus){
+    document.querySelector('.tabs').innerHTML=tabs.map(name=>'<button type="button" data-page="'+name+'" aria-pressed="'+(page===name)+'">'+name+'</button>').join('');
+    document.querySelectorAll('.switch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.side===mobile)));
+    pair.innerHTML=['before','after'].map(side=>{
+      const after=side==='after';
+      const rail='<aside class="rail"><span class="wordmark">OPC <small>工作台</small></span><ul>'+nav.map(name=>'<li><button type="button" '+(tabs.includes(name)?'data-page="'+name+'"':'disabled')+(page===name?' aria-current="page"':'')+'>'+name+'</button></li>').join('')+'</ul></aside>';
+      return '<section class="pane '+side+(mobile===side?' mobile-active':'')+'"><header class="pane-head"><h2>'+(after?'右边 · 改版':'左边 · 现有版')+'</h2><span>'+(after?'设计预览':'按现有页面还原')+'</span></header><div class="mock">'+rail+'<div class="desk"><div class="bar"><h3>'+page+'</h3>'+btn('制作流程','disabled')+'</div>'+views[page](after)+'</div></div>'+(after?'<div class="legend">'+legends[page]+'</div>':'')+'</section>';
+    }).join('');
+    if(focus) document.querySelector(focus)?.focus({preventScroll:true});
+  }
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('button');
+    if(!b || b.disabled) return;
+    if(b.dataset.page){
+      page=b.dataset.page;
+      render('.tabs [data-page="'+page+'"]');
+      return;
+    }
+    if(b.dataset.side){
+      mobile=b.dataset.side;
+      document.querySelectorAll('.switch button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.side===mobile)));
+      pair.querySelectorAll('.pane').forEach(x=>x.classList.toggle('mobile-active',x.classList.contains(mobile)));
+      return;
+    }
+    if(b.dataset.action==='pick'){
+      reviewing=true;
+      render();
+      document.getElementById('diff')?.scrollIntoView({block:'nearest',behavior:'instant'});
+    }
+    if(b.dataset.action==='apply' || b.dataset.action==='undo'){
+      applied=b.dataset.action==='apply';
+      render('[data-action="'+(applied?'undo':'apply')+'"]');
+    }
+    if(b.dataset.action==='proposal'){
+      proposal=true;
+      render();
+    }
+  });
+  render();
+</script>
+</body>
+</html>
